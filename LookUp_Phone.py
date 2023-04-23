@@ -12,7 +12,7 @@ def numverify_lookup(phone_number, api_key):
     else:
         raise Exception(f"Error: {response.status_code}")
 if __name__ == "__main__":
-    api_key = "YOUR_API_KEY"
+    api_key = "Po6QXIu1xBKBguQJ8uv4xj7Cf8ZwcfiQ"
     phone_number = input("Enter a phone number to validate: ")
     try:
         result = numverify_lookup(phone_number, api_key)
