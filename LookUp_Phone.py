@@ -1,23 +1,21 @@
 import requests
-
-# Replace YOUR_API_KEY with your actual API key
-api_key = "YOUR_API_KEY"
-
-# Replace PHONE_NUMBER with the phone number you want to lookup
-phone_number = "PHONE_NUMBER"
-
-# Make an HTTP GET request to the API endpoint
-response = requests.get(f"https://apilayer.net/api/validate?access_key={Po6QXIu1xBKBguQJ8uv4xj7Cf8ZwcfiQ}&number={phone_number}&country_code=IN&format=1")
-
-# Parse the JSON response
-data = response.json()
-
-# Print the information about the phone number
-if data["valid"]:
-    print(f"Phone number: {data['number']}")
-    print(f"Country: {data['country_name']} ({data['country_code']})")
-    print(f"Location: {data['location']}")
-    print(f"Carrier: {data['carrier']}")
-    print(f"Line type: {data['line_type']}")
-else:
-    print("Invalid phone number")
+def numverify_lookup(phone_number, api_key):
+    base_url = "http://apilayer.net/api/validate"
+    params = {
+        "access_key": api_key,
+        "number": phone_number,
+        "format": 1
+    }
+    response = requests.get(base_url, params=params)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Error: {response.status_code}")
+if __name__ == "__main__":
+    api_key = "YOUR_API_KEY"
+    phone_number = input("Enter a phone number to validate: ")
+    try:
+        result = numverify_lookup(phone_number, api_key)
+        print(f"Validation Result: {result}")
+    except Exception as e:
+        print(e)
