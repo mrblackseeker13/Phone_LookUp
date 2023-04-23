@@ -1,18 +1,23 @@
-import phonenumbers
 import requests
 
-def reverse_phone_lookup(number):
-    url = f'http://apilayer.net/api/validate?access_key=YOUR_ACCESS_KEY&number={Po6QXIu1xBKBguQJ8uv4xj7Cf8ZwcfiQ}&country_code=IN&format=1'
-    response = requests.get(url)
-    data = response.json()
-    if data['valid']:
-        parsed_number = phonenumbers.parse(number, "IN")
-        print(f"Phone number: {phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumberFormat.INTERNATIONAL)}")
-        print(f"Location: {phonenumbers.region_name_for_number(parsed_number, 'en')}")
-        print(f"Carrier: {data['carrier']}")
-        print(f"Line type: {data['line_type']}")
-    else:
-        print("Invalid phone number")
+# Replace YOUR_API_KEY with your actual API key
+api_key = "YOUR_API_KEY"
 
-# Example usage
-reverse_phone_lookup('+919876543210')
+# Replace PHONE_NUMBER with the phone number you want to lookup
+phone_number = "PHONE_NUMBER"
+
+# Make an HTTP GET request to the API endpoint
+response = requests.get(f"https://apilayer.net/api/validate?access_key={Po6QXIu1xBKBguQJ8uv4xj7Cf8ZwcfiQ}&number={phone_number}&country_code=IN&format=1")
+
+# Parse the JSON response
+data = response.json()
+
+# Print the information about the phone number
+if data["valid"]:
+    print(f"Phone number: {data['number']}")
+    print(f"Country: {data['country_name']} ({data['country_code']})")
+    print(f"Location: {data['location']}")
+    print(f"Carrier: {data['carrier']}")
+    print(f"Line type: {data['line_type']}")
+else:
+    print("Invalid phone number")
